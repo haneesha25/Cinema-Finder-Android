@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "366008072021",
+    "project_id": "cinemafinder-a6d8f",
+    "storage_bucket": "cinemafinder-a6d8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366008072021:android:3ac10f4f96a1cd611ee1dc",
+        "android_client_info": {
+          "package_name": "com.example.cinemafinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366008072021-ar1fmc2uvj2pngtpome5kf62j8gferu2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB1hLIyjJY-VCHRN-TQqFGVYjbw_FeAQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366008072021-ar1fmc2uvj2pngtpome5kf62j8gferu2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "366008072021-tck6elld43jsocrkvjhiff4io4qcqp7s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cinemafinder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366008072021:android:301f7141ef7e3e5e1ee1dc",
+        "android_client_info": {
+          "package_name": "com.example.cinemafinderandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366008072021-ar1fmc2uvj2pngtpome5kf62j8gferu2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB1hLIyjJY-VCHRN-TQqFGVYjbw_FeAQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366008072021-ar1fmc2uvj2pngtpome5kf62j8gferu2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "366008072021-tck6elld43jsocrkvjhiff4io4qcqp7s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cinemafinder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
