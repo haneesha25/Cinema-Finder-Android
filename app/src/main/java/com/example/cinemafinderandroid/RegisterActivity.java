@@ -105,6 +105,26 @@ public class RegisterActivity extends AppCompatActivity {
         else if (!password.equals(cpassword)){
             etpassword.setError("Password is not matched");
             etpassword.requestFocus();
+        }else{
+            Map<String,String> items = new HashMap<>();
+            items.put("fullName",name);
+            items.put("email",email);
+            items.put("contactNumber",phone);
+            items.put("password",password);
+
+            firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        dbroot.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(items);
+                        Toast.makeText(RegisterActivity.this, "User registered sucessfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                    }
+                    else{
+                        Toast.makeText(RegisterActivity.this, "Registration Error:"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 }
