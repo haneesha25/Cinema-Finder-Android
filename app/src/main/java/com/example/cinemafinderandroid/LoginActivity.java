@@ -40,11 +40,26 @@ public class LoginActivity extends AppCompatActivity {
         forgotpassword = findViewById(R.id.forgotpassword);
 
         etregister.setText(Html.fromHtml(text));
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         login.setOnClickListener(view -> {
             Loginuser();
         });
 
+        forgotpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = etloginemail.getText().toString();
+                if(TextUtils.isEmpty(email)){
+                    etloginemail.setError("Email can not be empty");
+                    etloginemail.requestFocus();
 
+
+            }
+        });
 
         etregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +75,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = etloginpassword.getText().toString();
 
         if(TextUtils.isEmpty(email)){
+            etloginemail.setError("Email can not be empty");
+            etloginemail.requestFocus();
+        }
+        else if (TextUtils.isEmpty(password)){
+            etloginpassword.setError("Password can not be empty");
+            etloginpassword.requestFocus();
+        }
+
+        else{
             firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -67,7 +91,13 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "User Loggedin successfully", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         String useremail = user.getEmail().toString();
+                        if(useremail.equals("admin@gmail.com")){
+                            startActivity(new Intent(LoginActivity.this,AdminActivity.class));
+                        }
+                        else{
                             startActivity(new Intent(LoginActivity.this,UserProfileActivity.class));
+                        }
+
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Login Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
