@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
             items.put("fullName",name);
             items.put("email",email);
             items.put("contactNumber",phone);
-            items.put("password",password);
+            //items.put("password",password);
 
             firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
