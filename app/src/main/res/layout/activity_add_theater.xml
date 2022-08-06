@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTheaterActivity"
+    android:orientation="vertical"
+    android:padding="24dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:text="Add a theater"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginVertical="16dp"/>
+            >
+            <ImageButton
+                android:id="@+id/selectimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/signin"
+                android:layout_gravity="center"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:id="@+id/theatername"
+                android:background="@drawable/edittextbg"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:hint="Theater Name"
+                >
+            </EditText>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:id="@+id/theateraddress"
+                android:background="@drawable/edittextbg"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:hint="Theater Address"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Theater"
+                android:id="@+id/add_theater_btn"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:paddingRight="60dp"
+                android:paddingLeft="60dp"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:background="@drawable/buttonbg"
+                 />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
