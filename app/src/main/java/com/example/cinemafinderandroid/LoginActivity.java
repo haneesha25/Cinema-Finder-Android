@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "User Loggedin successfully", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         String useremail = user.getEmail().toString();
-                        if(useremail.equals("admin@gmail.com")|| useremail.equals("dhruviadmin@gmail.com")){
+                        if(useremail.equals("admin@gmail.com")){
                             startActivity(new Intent(LoginActivity.this,AdminHome.class));
                         }
                         else{

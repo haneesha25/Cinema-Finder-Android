@@ -1,6 +1,7 @@
 package com.example.cinemafinderandroid;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,6 +37,7 @@ public class AddTheaterActivity extends AppCompatActivity {
     Button addtheaterbtn;
     ImageView selectimage;
     String userid;
+    private String theaterId;
     public Uri imageurl;
     public String theaterimageurl;
 
@@ -52,12 +57,10 @@ public class AddTheaterActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
-
         theatername = findViewById(R.id.theatername);
         theateraddress = findViewById(R.id.theateraddress);
         addtheaterbtn = findViewById(R.id.add_theater_btn);
         selectimage = findViewById(R.id.selectimage);
-
         FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
 
@@ -95,12 +98,20 @@ public class AddTheaterActivity extends AppCompatActivity {
             Map<String, String> items = new HashMap<>();
             items.put("name", ettheatername);
             items.put("address", ettheateraddress);
-            items.put("imageUrl", theaterimageurl);
-            items.put("adminid", userid);
+            //items.put("imageUrl", theaterimageurl);
+            //items.put("adminid", userid);
+            items.put("theaterid","");
 
-            dbroot.collection("theater").add(items);
+            dbroot.collection("theater").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    task.getResult().update("theaterid" , task.getResult().getId());
+                }
+            });
             // Toast.makeText(AddTheaterActivity.this, "Url" + theaterimageurl, Toast.LENGTH_SHORT).show();
             Toast.makeText(AddTheaterActivity.this, "Add theater SuccessFully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AddTheaterActivity.this, ViewTheatersActivity.class);
+            startActivity(intent);
         }
 
     }
@@ -112,7 +123,7 @@ public class AddTheaterActivity extends AppCompatActivity {
         imageurl = data.getData();
         selectimage.setImageURI(imageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("theater/"+randomkey);
+        final StorageReference sr = storageReference.child("theater");
         sr.putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -128,6 +139,4 @@ public class AddTheaterActivity extends AppCompatActivity {
 
         });
     }
-
-
 }

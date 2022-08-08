@@ -1,6 +1,7 @@
 package com.example.cinemafinderandroid;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,15 +15,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,10 +37,11 @@ public class AddMovieActivity extends AppCompatActivity {
     EditText moviename,moviecast,moviedirector;
     Button addmoviebtn;
     ImageView selectmovieimage;
+    ArrayList<ViewMovieValues> movielist;
 
     public Uri imageurl;
     public String movieimageurl,userid;
-
+    private String movieId;
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
@@ -52,7 +58,7 @@ public class AddMovieActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
-
+        movieId = dbroot.collection("movie").getId();
         moviename = findViewById(R.id.moviename);
         moviecast = findViewById(R.id.moviecast);
         moviedirector = findViewById(R.id.moviedirector);
@@ -80,7 +86,6 @@ public class AddMovieActivity extends AppCompatActivity {
             }
         });
     }
-
     private void addmovie() {
 
         String ettheatername = moviename.getText().toString();
@@ -105,10 +110,18 @@ public class AddMovieActivity extends AppCompatActivity {
             items.put("cast",etmoviecast );
             items.put("director",etmoviedirector );
             items.put("adminid",userid );
+            items.put("movieid","");
 
 
-            dbroot.collection("movie").add(items);
+            dbroot.collection("movie").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    task.getResult().update("movieid", task.getResult().getId());
+                }
+            });
             Toast.makeText(AddMovieActivity.this, "Add Movie SuccessFully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AddMovieActivity.this, ViewMovieActivity.class);
+            startActivity(intent);
         }
     }
     @Override
@@ -135,6 +148,4 @@ public class AddMovieActivity extends AppCompatActivity {
 
         });
     }
-
-
 }

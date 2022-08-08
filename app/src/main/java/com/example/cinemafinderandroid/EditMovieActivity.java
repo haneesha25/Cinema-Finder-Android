@@ -91,8 +91,9 @@ public class EditMovieActivity extends AppCompatActivity {
                 HashMap<String, Object> editmoviedata = new HashMap<>();
                 editmoviedata.put("cast", updatemoviecast.getText().toString());
                 editmoviedata.put("director", updatemoviedirector.getText().toString());
-                editmoviedata.put("moviename", updatemoviename.getText().toString());
+                editmoviedata.put("name", updatemoviename.getText().toString());
                 editmoviedata.put("imageUrl", movieimageurl);
+                editmoviedata.put("movieid",movieId);
 
                 dbroot.collection("movie").document(movieId).set(editmoviedata).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
