@@ -177,5 +177,33 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
             }
         });
 
+        timebtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timezone = "";
+                timezone = timebtn1.getText().toString();
+                timebtn1.setBackgroundColor(Color.WHITE);
+                timebtn1.setTextColor(Color.BLACK);
+            }
+        });
+        timebtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timezone = "";
+                timezone = timebtn2.getText().toString();
+                timebtn2.setBackgroundColor(Color.WHITE);
+                timebtn2.setTextColor(Color.BLACK);
+            }
+        });
+        timebtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timezone = "";
+                timezone = timebtn3.getText().toString();
+                timebtn3.setBackgroundColor(Color.WHITE);
+                timebtn3.setTextColor(Color.BLACK);
+            }
+        });
+
         
 }
