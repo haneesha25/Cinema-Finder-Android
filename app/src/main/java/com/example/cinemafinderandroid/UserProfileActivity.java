@@ -31,7 +31,7 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     private String userID;
     TextView usernameTv,emailTv,mobilenumberTv,changepassword;
-    Button signOut;
+    Button signOut,updateprofile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mobilenumberTv = (TextView) findViewById(R.id.usermobilenumber);
         signOut = (Button) findViewById(R.id.signoutbtn);
         changepassword = (TextView) findViewById(R.id.changepassword);
+        updateprofile = findViewById(R.id.updateprofile);
 
         changepassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 firebaseAuth.sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(UserProfileActivity.this, "Change pssword link has been sent to your mail id", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserProfileActivity.this, "Change password link has been sent to your mail id", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -73,11 +74,16 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 usernameTv.setText(documentSnapshot.getString("fullName"));
-                emailTv.setText(documentSnapshot.getString("email"));
+                emailTv.setText(user.getEmail());
                 mobilenumberTv.setText(documentSnapshot.getString("contactNumber"));
             }
         });
 
-
+        updateprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UserProfileActivity.this,UpdateProfileActivity.class));
+            }
+        });
     }
 }
