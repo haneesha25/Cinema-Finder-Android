@@ -77,5 +77,33 @@ public class AddTheaterActivity extends AppCompatActivity {
             }
         });
     }
+    private void addtheater() {
+
+        String ettheatername = theatername.getText().toString();
+        String ettheateraddress = theateraddress.getText().toString();
+        //  String ettheaterimageurl = theaterimageurl;
+
+        if(TextUtils.isEmpty(ettheatername)){
+            theatername.setError("Email can not be empty");
+            theatername.requestFocus();
+        }
+        else if (TextUtils.isEmpty(ettheateraddress)){
+            theateraddress.setError("Password can not be empty");
+            theateraddress.requestFocus();
+        }else {
+
+            Map<String, String> items = new HashMap<>();
+            items.put("name", ettheatername);
+            items.put("address", ettheateraddress);
+            items.put("imageUrl", theaterimageurl);
+            items.put("adminid", userid);
+
+            dbroot.collection("theater").add(items);
+            // Toast.makeText(AddTheaterActivity.this, "Url" + theaterimageurl, Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddTheaterActivity.this, "Add theater SuccessFully", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    
 
 }
