@@ -38,5 +38,49 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         return new ListMovieHolder(view);
     }
 
-    
+    @Override
+    public void onBindViewHolder(@NonNull ListMovieHolder holder, int position) {
+
+        final ViewMovieValues temp = showmovielist.get(position);
+
+        holder.moviename.setText(showmovielist.get(position).getName());
+        holder.moviecast.setText(showmovielist.get(position).getCast());
+        holder.moviedirector.setText(showmovielist.get(position).getDirector());
+        String movieimageurl = null;
+        movieimageurl = showmovielist.get(position).getimageUrl();
+        Picasso.get().load(movieimageurl).into(holder.movieimage);
+
+        holder.movieimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(context,ListTheater.class);
+               // i.putExtra("theaterID",temp.getTheaterID());
+                i.putExtra("movieID",showmovielist.get(position).getMovieId());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        });
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return showmovielist.size();
+    }
+
+    class ListMovieHolder extends RecyclerView.ViewHolder{
+
+        TextView moviename,moviecast,moviedirector;
+        ImageView movieimage;
+
+        public ListMovieHolder(@NonNull View itemView) {
+            super(itemView);
+
+            moviename = itemView.findViewById(R.id.listmoviename);
+            moviecast = itemView.findViewById(R.id.listmoviecast);
+            moviedirector = itemView.findViewById(R.id.listmoviedirector);
+            movieimage = itemView.findViewById(R.id.listmovieimage);
+        }
+    }
 }
