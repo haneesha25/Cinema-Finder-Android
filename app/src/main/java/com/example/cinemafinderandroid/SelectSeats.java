@@ -25,8 +25,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -207,66 +205,5 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
             }
         });
 
-        payment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (TextUtils.isEmpty(setdates.getText().toString())){
-                    Toast.makeText(SelectSeats.this, "Date is not Selected", Toast.LENGTH_SHORT).show();
-                }
-                else {
-
-                    String totalprice1 = String.valueOf(totalprice);
-                    int amount = Math.round(Float.parseFloat(totalprice1) *100);
-
-                    Checkout checkout = new Checkout();
-                    checkout.setKeyID("rzp_test_HCVYCp9beI7gNu");
-                    checkout.setImage(R.drawable.splashscreen);
-
-                    JSONObject object = new JSONObject();
-                    try {
-
-                        object.put("name", "Cinema Finder");
-                        object.put("description", "Test payment");
-                        object.put("theme.color", "");
-                        object.put("currency", "CAD");
-                        object.put("amount", amount);
-                        object.put("prefill.contact", dbroot.collection("theater").document(gettheaterid));
-                        object.put("prefill.email", "bhoopathi575@gmail.com");
-
-                        // open razorpay to checkout activity
-                        checkout.open(SelectSeats.this, object);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void onPaymentSuccess(String s) {
-        Map<String, Object> items = new HashMap<>();
-        items.put("numbersOfSeats", noofseates.getText().toString());
-        items.put("theaterid", gettheaterid);
-        items.put("movieid", getmovieid);
-        items.put("totalPayment", "$" + totalprice);
-        items.put("uid", userid);
-        items.put("movieTime", timezone);
-        items.put("movieDate", setdates.getText().toString());
-        items.put("paymentId", s);
-
-        dbroot.collection("booking").add(items) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    public void onPaymentError(int i, String s) {
-        Toast.makeText(this, "Payment Error"+s, Toast.LENGTH_SHORT).show();
-    }
+        
 }
