@@ -32,26 +32,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public MovieAdapter(ArrayList<ViewMovieValues> movielist) {
 
-        this.movielist = movielist;
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-    }
-
-    @NonNull
-    @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movieitems,parent,false);
-        return new MovieViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-
-        holder.moviename.setText(movielist.get(position).getName());
-        holder.moviecast.setText(movielist.get(position).getCast());
-        holder.moviedirector.setText(movielist.get(position).getDirector());
-        String movieimageurl = null;
-        movieimageurl = movielist.get(position).getimageUrl();
         Picasso.get().load(movieimageurl).into(holder.imageView);
 
         holder.deletemovie.setOnClickListener(new View.OnClickListener() {
@@ -85,28 +65,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     }
 
-    @Override
-    public int getItemCount() {
-        return movielist.size();
-    }
-
-    class MovieViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView moviename,moviecast,moviedirector;
-        Button deletemovie,editmovie;
-        ImageView imageView;
-
-        public MovieViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            moviename = itemView.findViewById(R.id.recyclemoviename);
-            moviecast = itemView.findViewById(R.id.recyclemoviecast);
-            moviedirector = itemView.findViewById(R.id.recyclemoviedirector);
-            deletemovie = itemView.findViewById(R.id.deletemovie);
-            imageView = itemView.findViewById(R.id.movieimage);
-            editmovie = itemView.findViewById(R.id.editmovie);
-
-
-        }
     }
 }
