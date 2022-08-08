@@ -62,6 +62,10 @@ public class ListTheaterAdapter extends RecyclerView.Adapter<ListTheaterAdapter.
 
     }
 
+    @Override
+    public int getItemCount() {
+        return viewTheaterValues.size();
+    }
 
 
 
