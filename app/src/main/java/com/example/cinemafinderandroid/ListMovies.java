@@ -39,7 +39,7 @@ public class ListMovies extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_movies);
 
-       // gettheaterid = getIntent().getStringExtra("theaterID");
+       // gettheaterid = getIntent().getStringExtra("theaterID"); 
 
         showmovielist = findViewById(R.id.showallmovielist);
         showmovielist.setLayoutManager(new LinearLayoutManager(this));
