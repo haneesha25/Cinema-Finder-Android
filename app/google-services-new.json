@@ -50,14 +50,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "366008072021-ruvlumrtva69r6930dso81vi7j75tnlk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.cinemafinderandroid",
-            "certificate_hash": "da603d244641bdb131efb47dc7b0c3b0e9c2e42a"
-          }
-        },
-        {
           "client_id": "366008072021-ar1fmc2uvj2pngtpome5kf62j8gferu2.apps.googleusercontent.com",
           "client_type": 3
         }
