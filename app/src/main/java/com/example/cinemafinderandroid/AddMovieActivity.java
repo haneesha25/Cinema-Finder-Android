@@ -81,4 +81,60 @@ public class AddMovieActivity extends AppCompatActivity {
         });
     }
 
+    private void addmovie() {
+
+        String ettheatername = moviename.getText().toString();
+        String etmoviecast = moviecast.getText().toString();
+        String etmoviedirector = moviedirector.getText().toString();
+
+        if(TextUtils.isEmpty(ettheatername)){
+            moviename.setError("Movie name can not be empty");
+            moviename.requestFocus();
+        }
+        else if (TextUtils.isEmpty(etmoviecast)){
+            moviecast.setError("Movie cast can not be empty");
+            moviecast.requestFocus();
+        }
+        else if (TextUtils.isEmpty(etmoviedirector)){
+            moviedirector.setError("Movie Director can not be empty");
+            moviedirector.requestFocus();
+        }else{
+            Map<String, String> items = new HashMap<>();
+            items.put("name",ettheatername);
+            items.put("imageUrl", movieimageurl);
+            items.put("cast",etmoviecast );
+            items.put("director",etmoviedirector );
+            items.put("adminid",userid );
+
+
+            dbroot.collection("movie").add(items);
+            Toast.makeText(AddMovieActivity.this, "Add Movie SuccessFully", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
+        imageurl = data.getData();
+        selectmovieimage.setImageURI(imageurl);
+        final String randomkey = UUID.randomUUID().toString();
+        final StorageReference sr = storageReference.child("movie/"+randomkey);
+        sr.putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(AddMovieActivity.this, "uri: "+uri, Toast.LENGTH_SHORT).show();
+                        movieimageurl = uri.toString();
+                    }
+                });
+            }
+
+        });
+    }
+
+
 }
