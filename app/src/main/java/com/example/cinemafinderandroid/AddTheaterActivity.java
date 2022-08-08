@@ -104,6 +104,30 @@ public class AddTheaterActivity extends AppCompatActivity {
         }
 
     }
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
+        imageurl = data.getData();
+        selectimage.setImageURI(imageurl);
+        final String randomkey = UUID.randomUUID().toString();
+        final StorageReference sr = storageReference.child("theater/"+randomkey);
+        sr.putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(AddTheaterActivity.this, "uri: "+uri, Toast.LENGTH_SHORT).show();
+                        theaterimageurl = uri.toString();
+                    }
+                });
+            }
+
+        });
+    }
+
 
 }
