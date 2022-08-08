@@ -25,6 +25,7 @@ public class ListTheater extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<ViewTheaterValues> viewTheaterValues;
+    FirebaseFirestore db;
     ListTheaterAdapter theaterAdapter;
     String movieID;
 
@@ -71,6 +72,22 @@ public class ListTheater extends AppCompatActivity {
         });
 
 
-        
+        db = FirebaseFirestore.getInstance();
+        db.collection("theater").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+
+                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                for (DocumentSnapshot d:list){
+                    String theaterId = d.getId();
+                    ViewTheaterValues obj = d.toObject(ViewTheaterValues.class);
+                    obj.setMovieId(movieID);
+                    obj.setTheaterId(theaterId);
+                    viewTheaterValues.add(obj);
+                }
+                theaterAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
