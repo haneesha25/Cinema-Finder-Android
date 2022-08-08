@@ -87,7 +87,8 @@ public class EditTheaterActivity extends AppCompatActivity {
                 HashMap<String, Object> edittheaterdata = new HashMap<>();
                 edittheaterdata.put("name", updatetheatername.getText().toString());
                 edittheaterdata.put("address", updatetheateraddress.getText().toString());
-                edittheaterdata.put("imageUrl", theaterimageuri);
+                //edittheaterdata.put("imageUrl", theaterimageuri);
+                edittheaterdata.put("theaterid",theaterId);
 
                 dbroot.collection("theater").document(theaterId).set(edittheaterdata).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -108,7 +109,7 @@ public class EditTheaterActivity extends AppCompatActivity {
         updimageurl = data.getData();
         updatetheaterimage.setImageURI(updimageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("theater/"+randomkey);
+        final StorageReference sr = storageReference.child("theater");
         sr.putFile(updimageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
