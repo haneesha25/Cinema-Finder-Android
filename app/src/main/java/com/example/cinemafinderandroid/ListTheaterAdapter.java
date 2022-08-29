@@ -43,8 +43,8 @@ public class ListTheaterAdapter extends RecyclerView.Adapter<ListTheaterAdapter.
 
         final ViewTheaterValues temp = viewTheaterValues.get(position);
 
-        holder.recyclemoviename.setText(viewTheaterValues.get(position).getName()+"123");
-        holder.recyclemoviecast.setText(viewTheaterValues.get(position).getAddress()+"123");
+        holder.recyclemoviename.setText(viewTheaterValues.get(position).getName());
+        holder.recyclemoviecast.setText(viewTheaterValues.get(position).getAddress());
         String theaterimageurl = null;
         theaterimageurl = viewTheaterValues.get(position).getImageUrl();
         Picasso.get().load(theaterimageurl).into(holder.recyclemimage);

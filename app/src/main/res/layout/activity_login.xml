@@ -121,6 +121,13 @@
                             android:id="@+id/txtregister"
                             android:layout_margin="10dp"
                             />
+                        <ImageView
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/googlelogo"
+                            android:id="@+id/googlelogin"/>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

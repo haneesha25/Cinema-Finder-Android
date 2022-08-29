@@ -74,57 +74,58 @@ public class EditMovieActivity extends AppCompatActivity {
             }
         });
 
-//        updatemovieimage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(EditMovieActivity.this, "Image clicked", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                startActivityForResult(intent,1);
-//            }
-//        });
-//
-//        editmovie.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(EditMovieActivity.this, "Edit clicked", Toast.LENGTH_SHORT).show();
-//                HashMap<String, Object> editmoviedata = new HashMap<>();
-//                editmoviedata.put("cast", updatemoviecast.getText().toString());
-//                editmoviedata.put("director", updatemoviedirector.getText().toString());
-//                editmoviedata.put("moviename", updatemoviename.getText().toString());
-//                editmoviedata.put("imageUrl", movieimageurl);
-//
-//                dbroot.collection("movie").document(movieId).set(editmoviedata).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Toast.makeText(EditMovieActivity.this, "Movie Updated Successfully", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(EditMovieActivity.this, ViewMovieActivity.class);
-//                        startActivity(intent);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
-//        updimageurl = data.getData();
-//        updatemovieimage.setImageURI(updimageurl);
-//        final String randomkey = UUID.randomUUID().toString();
-//        final StorageReference sr = storageReference.child("movie/"+randomkey);
-//        sr.putFile(updimageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Toast.makeText(EditMovieActivity.this, "uri: "+sr.getDownloadUrl(), Toast.LENGTH_SHORT).show();
-//                sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        movieimageurl = uri.toString();
-//                    }
-//                });
-//            }
-//        });
-//    }
-//}
+        updatemovieimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EditMovieActivity.this, "Image clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent,1);
+            }
+        });
+
+        editmovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EditMovieActivity.this, "Edit clicked", Toast.LENGTH_SHORT).show();
+                HashMap<String, Object> editmoviedata = new HashMap<>();
+                editmoviedata.put("cast", updatemoviecast.getText().toString());
+                editmoviedata.put("director", updatemoviedirector.getText().toString());
+                editmoviedata.put("name", updatemoviename.getText().toString());
+                editmoviedata.put("imageUrl", movieimageurl);
+                editmoviedata.put("movieid",movieId);
+
+                dbroot.collection("movie").document(movieId).set(editmoviedata).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(EditMovieActivity.this, "Movie Updated Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EditMovieActivity.this, ViewMovieActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
+        updimageurl = data.getData();
+        updatemovieimage.setImageURI(updimageurl);
+        final String randomkey = UUID.randomUUID().toString();
+        final StorageReference sr = storageReference.child("movie/"+randomkey);
+        sr.putFile(updimageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(EditMovieActivity.this, "uri: "+sr.getDownloadUrl(), Toast.LENGTH_SHORT).show();
+                sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        movieimageurl = uri.toString();
+                    }
+                });
+            }
+        });
+    }
+}

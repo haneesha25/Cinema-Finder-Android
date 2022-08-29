@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/bhoop/Downloads/CinemaFinderAndroid2 (3)/CinemaFinderAndroid2/CinemaFinderAndroid2/app/src/main/res/layout/activity_admin_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/bhoop/Downloads/CinemaFinderAndroid2 (3)/CinemaFinderAndroid2/CinemaFinderAndroid2/app/src/main/res/layout/activity_view_theaters.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/bhoop/Downloads/CinemaFinderAndroid2 (3)/CinemaFinderAndroid2/CinemaFinderAndroid2/app/src/main/res/layout/listmovieiteam.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/bhoop/Downloads/CinemaFinderAndroid2 (3)/CinemaFinderAndroid2/CinemaFinderAndroid2/app/src/main/res/layout/listtheateritem.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/bhoop/Downloads/CinemaFinderAndroid2 (3)/CinemaFinderAndroid2/CinemaFinderAndroid2/app/src/main/res/layout/theateritems.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
