@@ -260,7 +260,71 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
         dbroot.collection("booking").add(items) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
+                FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
+                String url ="https://api.sendgrid.com/v3/mail/send";
+                RequestQueue queue = Volley.newRequestQueue(SelectSeats.this);
+                String message= "Your Booking has been Confiemd!!!";
+                String username = "";
+                JSONObject jsonBody = new JSONObject();
+                try {
+                    JSONArray personalizationsJarray = new JSONArray();
+
+                    JSONArray toArray = new JSONArray();
+                    JSONObject toParentObject= new JSONObject();
+                    JSONObject toObject= new JSONObject();
+                    toObject.put("email",firebaseAuth.getInstance().getCurrentUser().getEmail());
+                    toObject.put("name","Cinema Finder User");
+                    toArray.put(toObject);
+
+                    JSONArray fromJarray1 = new JSONArray();
+                    JSONObject fromObject1= new JSONObject();
+
+                    personalizationsJarray.put(toParentObject);
+
+                    //commented contet object in parent object
+                    JSONArray contentJarray = new JSONArray();
+                    JSONObject contentObject= new JSONObject();
+                    contentObject.put("type", "text");
+                    contentObject.put("value",message);
+                    contentJarray.put(contentObject);
+
+                    JSONArray fromJarray = new JSONArray();
+                    JSONObject fromObject= new JSONObject();
+                    fromObject.put("email","udaydheerajreddy@gmail.com");
+                    fromObject.put("name","Cinema Finder");
+                    fromJarray.put(fromObject);
+
+                    jsonBody.put("personalizations",personalizationsJarray);
+                    jsonBody.put("content",contentJarray);
+                    jsonBody.put("from",fromObject);
+                    
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(1,
+                        url, jsonBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+                    }
+                ){
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("Authorization","Bearer SG.XXXXXXXXXXXXXXXXXXXXXXXXX");
+                        //  params.put("Authorization","Bearer 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");
+                        params.put("Content-Type","application/json");
+                        return params;
+                    }
+                };
+
+
+                queue.add(jsonObjectRequest);
+
             }
         });
     }
