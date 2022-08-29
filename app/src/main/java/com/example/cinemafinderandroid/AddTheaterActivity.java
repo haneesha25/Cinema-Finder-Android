@@ -1,6 +1,7 @@
 package com.example.cinemafinderandroid;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -35,6 +39,7 @@ public class AddTheaterActivity extends AppCompatActivity {
     String userid;
     public Uri imageurl;
     public String theaterimageurl;
+    private String theaterid;
 
 
     private DatabaseReference databaseReference;
@@ -95,10 +100,15 @@ public class AddTheaterActivity extends AppCompatActivity {
             Map<String, String> items = new HashMap<>();
             items.put("name", ettheatername);
             items.put("address", ettheateraddress);
-            items.put("imageUrl", theaterimageurl);
-            items.put("adminid", userid);
+            //items.put("imageUrl", theaterimageurl);
+            //items.put("adminid", userid);
 
-            dbroot.collection("theater").add(items);
+            dbroot.collection("theater").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    task.getResult().update("theaterid",task.getResult().getId());
+                }
+            });
             // Toast.makeText(AddTheaterActivity.this, "Url" + theaterimageurl, Toast.LENGTH_SHORT).show();
             Toast.makeText(AddTheaterActivity.this, "Add theater SuccessFully", Toast.LENGTH_SHORT).show();
         }
@@ -128,6 +138,4 @@ public class AddTheaterActivity extends AppCompatActivity {
 
         });
     }
-
-
 }
