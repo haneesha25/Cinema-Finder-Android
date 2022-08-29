@@ -426,7 +426,7 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
                        // params.put("Authorization","Bearer SG.XXXXXXXXXXXXXXXXXXXXXXXXX");
-                        //  params.put("Authorization","Bearer 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");
+                        //  params.put("Authorization","Bearer SG");
                         params.put("Content-Type","application/json");
                         return params;
                     }
