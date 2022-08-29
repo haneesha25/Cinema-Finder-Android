@@ -31,7 +31,7 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     private String userID;
     TextView usernameTv,emailTv,mobilenumberTv,changepassword;
-    Button signOut,updateprofile;
+    Button signOut,updateprofile,bookinghistoryuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,14 @@ public class UserProfileActivity extends AppCompatActivity {
         signOut = (Button) findViewById(R.id.signoutbtn);
         changepassword = (TextView) findViewById(R.id.changepassword);
         updateprofile = findViewById(R.id.updateprofile);
+        bookinghistoryuser = findViewById(R.id.bookinghistoryuser);
+
+        bookinghistoryuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UserProfileActivity.this,BookingHistory.class));
+            }
+        });
 
         changepassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 firebaseAuth.sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(UserProfileActivity.this, "Change password link has been sent to your mail id", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserProfileActivity.this, "Change pssword link has been sent to your mail id", Toast.LENGTH_LONG).show();
                     }
                 });
             }
