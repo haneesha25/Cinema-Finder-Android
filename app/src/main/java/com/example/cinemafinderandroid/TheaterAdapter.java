@@ -2,6 +2,7 @@ package com.example.cinemafinderandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,12 +29,14 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.TheaterV
     ArrayList<ViewTheaterValues> viewTheaterValues;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
+    Context context;
 
-    public TheaterAdapter(ArrayList<ViewTheaterValues> viewTheaterValues) {
+    public TheaterAdapter(ArrayList<ViewTheaterValues> viewTheaterValues, Context context) {
 
         this.viewTheaterValues = viewTheaterValues;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        this.context = context;
     }
 
     @NonNull
@@ -49,7 +53,11 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.TheaterV
 
         String theaterimageurl = null;
         theaterimageurl = viewTheaterValues.get(position).getImageUrl();
-        Picasso.get().load(theaterimageurl).into(holder.recyclemimage);
+        if(!TextUtils.isEmpty(theaterimageurl)){
+            //Picasso.get().load(theaterimageurl).into(holder.recyclemimage);
+            Glide.with(context).load(theaterimageurl).into(holder.recyclemimage);
+        }
+
        // holder.recyclemoviedirector.setText(viewTheaterValues.get(position).getRecyclermdirector());
         //holder.recyclemimage.setImageResource(Integer.parseInt(viewTheaterValues.get(position).getImageUrl()));
 
@@ -101,7 +109,7 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.TheaterV
             super(itemView);
             recyclemoviename = (TextView) itemView.findViewById(R.id.theatername);
             recyclemoviecast = (TextView) itemView.findViewById(R.id.theateraddress);
-            recyclemimage = (ImageView) itemView.findViewById(R.id.theaterimage);
+           // recyclemimage = (ImageView) itemView.findViewById(R.id.theaterimage);
             deletetheater = (Button)   itemView.findViewById(R.id.deletetheater);
             edittheater = (Button)   itemView.findViewById(R.id.edittheater);
         }
