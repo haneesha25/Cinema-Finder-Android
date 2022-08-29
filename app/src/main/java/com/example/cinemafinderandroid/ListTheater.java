@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +25,14 @@ import java.util.List;
 public class ListTheater extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    SearchView searchView;
+
     ArrayList<ViewTheaterValues> viewTheaterValues;
     FirebaseFirestore db;
     ListTheaterAdapter theaterAdapter;
     String movieID;
 
-    ImageView profile;
+    ImageView profile,back;
     TextView title;
 
     LinearLayout listtheaterlayout;
@@ -42,6 +45,7 @@ public class ListTheater extends AppCompatActivity {
 
         movieID = getIntent().getStringExtra("movieID");
 
+        searchView = findViewById(R.id.searchtheater);
         recyclerView = (RecyclerView) findViewById(R.id.showalltheater);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,6 +57,9 @@ public class ListTheater extends AppCompatActivity {
 
         title = findViewById(R.id.title);
         profile = (ImageView) findViewById(R.id.profile);
+        back = (ImageView) findViewById(R.id.back) ;
+
+
 
 
         title.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +77,15 @@ public class ListTheater extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListTheater.this, ListMovies.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         db = FirebaseFirestore.getInstance();
@@ -89,5 +105,27 @@ public class ListTheater extends AppCompatActivity {
                 theaterAdapter.notifyDataSetChanged();
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                ArrayList<ViewTheaterValues> mylist = new ArrayList<>();
+                for (ViewTheaterValues vm : viewTheaterValues){
+                    if(vm.getName().toLowerCase().contains(s.toLowerCase())){
+                        mylist.add(vm);
+                    }
+                    ListTheaterAdapter listTheaterAdapter = new ListTheaterAdapter(mylist,getApplicationContext());
+                    recyclerView.setAdapter(listTheaterAdapter);
+                }
+                return true;
+            }
+        });
+
     }
 }

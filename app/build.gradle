@@ -4,8 +4,9 @@ plugins {
 }
 
 android {
-    compileSdk 32
 
+    compileSdk 32
+    
     defaultConfig {
         applicationId "com.example.cinemafinderandroid"
         minSdk 21
@@ -29,6 +30,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -54,6 +56,20 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.razorpay:checkout:1.6.19'
+    implementation 'com.firebaseui:firebase-ui-database:8.0.1'
+
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.google.maps.android:maps-utils-ktx:3.4.0'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+
+
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
 
 }

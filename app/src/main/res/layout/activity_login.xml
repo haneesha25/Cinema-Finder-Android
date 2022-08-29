@@ -121,13 +121,31 @@
                             android:id="@+id/txtregister"
                             android:layout_margin="10dp"
                             />
-                        <ImageView
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googlelogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                >
+
+                // google image logo
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="1dp"
+                    app:srcCompat="@drawable/google" />
+            </com.google.android.gms.common.SignInButton>
+                       <!-- <ImageView
                             android:textAlignment="center"
                             android:layout_gravity="center"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:src="@drawable/googlelogo"
-                            android:id="@+id/googlelogin"/>
+                            android:id="@+id/googlelogin"/>-->
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

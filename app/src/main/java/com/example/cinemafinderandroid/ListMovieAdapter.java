@@ -2,15 +2,18 @@ package com.example.cinemafinderandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -48,9 +51,23 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         holder.moviedirector.setText(showmovielist.get(position).getDirector());
         String movieimageurl = null;
         movieimageurl = showmovielist.get(position).getimageUrl();
-        Picasso.get().load(movieimageurl).into(holder.movieimage);
+        //Picasso.get().load(movieimageurl).into(holder.movieimage);
+        //Toast.makeText(context, "Testt", Toast.LENGTH_SHORT).show();
+        //holder.movieimage.setImageURI(Uri.parse(movieimageurl));
+        Glide.with(context).load(movieimageurl).into(holder.movieimage);
 
-        holder.movieimage.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context,ListTheater.class);
+                // i.putExtra("theaterID",temp.getTheaterID());
+                i.putExtra("movieID",showmovielist.get(position).getMovieId());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        });
+
+      /*  holder.movieimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -60,7 +77,7 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
             }
-        });
+        });*/
 
     }
 

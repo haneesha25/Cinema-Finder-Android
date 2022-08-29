@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     TextView etregister, forgotpassword;
     FirebaseAuth firebaseAuth;
-    ImageView googlelogo;
 
+    com.google.android.gms.common.SignInButton  googlelogo;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
 
@@ -132,7 +132,8 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Toast.makeText(LoginActivity.this, "User Loggedin", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    Intent intent = new Intent(LoginActivity.this, AdminHome.class);
+                                    finish();
+                                    Intent intent = new Intent(LoginActivity.this, ListMovies.class);
                                     startActivity(intent);
 
                                 } else {
@@ -143,9 +144,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
 
-                finish();
-                Intent i = new Intent(LoginActivity.this,AdminHome.class);
-                startActivity(i);
+               /* Intent i = new Intent(LoginActivity.this,AdminHome.class);
+                startActivity(i);*/
             } catch (ApiException e) {
                 Toast.makeText(this, "Something went wrong"+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -174,8 +174,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "User Loggedin successfully", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         String useremail = user.getEmail().toString();
-                        if(useremail.equals("admin@gmail.com")){
-                            startActivity(new Intent(LoginActivity.this,AdminHome.class));
+                        if(useremail.equals("admin@gmail.com")|| useremail.equals("dhruviadmin@gmail.com")){
+                            startActivity(new Intent(LoginActivity.this,AdminActivity.class));
                         }
                         else{
                             startActivity(new Intent(LoginActivity.this, ListMovies.class));

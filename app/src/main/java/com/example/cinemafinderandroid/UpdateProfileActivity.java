@@ -30,7 +30,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
     FirebaseFirestore dbroot;
     FirebaseAuth firebaseAuth;
     private String userID;
-    EditText usernameTv,emailTv,mobilenumberTv,changepassword;
+    EditText usernameTv,mobilenumberTv,changepassword;
+    TextView emailTv;
     Button updated;
 
     @Override
@@ -44,7 +45,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
 
         usernameTv = (EditText) findViewById(R.id.updateusername);
-        emailTv = (EditText) findViewById(R.id.updateuseremail);
+        emailTv = (TextView) findViewById(R.id.updateuseremail);
         mobilenumberTv = (EditText) findViewById(R.id.updateusermobilenumber);
         updated = findViewById(R.id.updated);
 
@@ -79,8 +80,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 dbroot.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(UserdataMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(UpdateProfileActivity.this, "User details Updated Successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(UpdateProfileActivity.this, ListMovies.class);
+                        finish();
+                        Intent intent = new Intent(UpdateProfileActivity.this, UserProfileActivity.class);
                         startActivity(intent);
                     }
                 });

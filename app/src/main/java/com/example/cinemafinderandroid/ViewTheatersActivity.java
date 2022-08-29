@@ -42,7 +42,7 @@ public class ViewTheatersActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         viewTheaterValues = new ArrayList<>();
-        theaterAdapter = new TheaterAdapter(viewTheaterValues);
+        theaterAdapter = new TheaterAdapter(viewTheaterValues,getApplicationContext());
         recyclerView.setAdapter(theaterAdapter);
 
         db = FirebaseFirestore.getInstance();
