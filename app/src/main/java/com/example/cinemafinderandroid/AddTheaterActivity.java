@@ -37,9 +37,9 @@ public class AddTheaterActivity extends AppCompatActivity {
     Button addtheaterbtn;
     ImageView selectimage;
     String userid;
-    private String theaterId;
     public Uri imageurl;
     public String theaterimageurl;
+    private String theaterid;
 
 
     private DatabaseReference databaseReference;
@@ -57,10 +57,12 @@ public class AddTheaterActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
+
         theatername = findViewById(R.id.theatername);
         theateraddress = findViewById(R.id.theateraddress);
         addtheaterbtn = findViewById(R.id.add_theater_btn);
         selectimage = findViewById(R.id.selectimage);
+
         FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
 
@@ -100,18 +102,15 @@ public class AddTheaterActivity extends AppCompatActivity {
             items.put("address", ettheateraddress);
             //items.put("imageUrl", theaterimageurl);
             //items.put("adminid", userid);
-            items.put("theaterid","");
 
             dbroot.collection("theater").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {
-                    task.getResult().update("theaterid" , task.getResult().getId());
+                    task.getResult().update("theaterid",task.getResult().getId());
                 }
             });
             // Toast.makeText(AddTheaterActivity.this, "Url" + theaterimageurl, Toast.LENGTH_SHORT).show();
             Toast.makeText(AddTheaterActivity.this, "Add theater SuccessFully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddTheaterActivity.this, ViewTheatersActivity.class);
-            startActivity(intent);
         }
 
     }
@@ -123,7 +122,7 @@ public class AddTheaterActivity extends AppCompatActivity {
         imageurl = data.getData();
         selectimage.setImageURI(imageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("theater");
+        final StorageReference sr = storageReference.child("theater/"+randomkey);
         sr.putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
