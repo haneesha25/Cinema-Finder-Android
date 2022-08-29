@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -69,8 +70,9 @@ public class EditMovieActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 updatemoviecast.setText(documentSnapshot.getString("cast"));
                 updatemoviedirector.setText(documentSnapshot.getString("director"));
-                updatemoviename.setText(documentSnapshot.getString("moviename"));
-                Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatemovieimage);
+                updatemoviename.setText(documentSnapshot.getString("name"));
+              //  Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatemovieimage);
+                Glide.with(getApplicationContext()).load(documentSnapshot.getString("imageUrl")).into(updatemovieimage);
             }
         });
 
@@ -91,8 +93,9 @@ public class EditMovieActivity extends AppCompatActivity {
                 HashMap<String, Object> editmoviedata = new HashMap<>();
                 editmoviedata.put("cast", updatemoviecast.getText().toString());
                 editmoviedata.put("director", updatemoviedirector.getText().toString());
-                editmoviedata.put("moviename", updatemoviename.getText().toString());
+                editmoviedata.put("name", updatemoviename.getText().toString());
                 editmoviedata.put("imageUrl", movieimageurl);
+                editmoviedata.put("movieid", movieId);
 
                 dbroot.collection("movie").document(movieId).set(editmoviedata).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
