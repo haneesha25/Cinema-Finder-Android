@@ -325,7 +325,7 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Booked successfully", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -342,7 +342,7 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
                         i.putExtra("orderid",documentReference.getId());
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
-                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();                    }
+                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Booked successfully", Toast.LENGTH_SHORT).show();                    }
                 }
                 ){
                     @Override
