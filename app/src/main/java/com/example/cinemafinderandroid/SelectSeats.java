@@ -257,9 +257,11 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
         items.put("movieDate", setdates.getText().toString());
         items.put("paymentId", s);
 
-        dbroot.collection("booking").add(items) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+         dbroot.collection("booking").add(items) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
+
+                int price = totalprice * count;
                 FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
                 String url ="https://api.sendgrid.com/v3/mail/send";
                 RequestQueue queue = Volley.newRequestQueue(SelectSeats.this);
@@ -278,6 +280,22 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
 
                     JSONArray fromJarray1 = new JSONArray();
                     JSONObject fromObject1= new JSONObject();
+                    fromObject1.put("email",user.getEmail());
+                    fromObject1.put("name",user.getDisplayName());
+                    fromObject1.put("movie",displaymoviename.getText().toString());
+                    fromObject1.put("seats", noofseates.getText().toString());
+                    fromObject1.put("price",totalprice);
+                    fromObject1.put("time",timezone);
+                    fromObject1.put("date",setdates.getText().toString());
+                    fromObject1.put("theatername",displaytheatername.getText().toString());
+                    fromObject1.put("address",displaytheateraddress.getText().toString());
+                    fromJarray1.put(fromObject1);
+
+
+                    toParentObject.put("subject"," Ticket Confirmed");
+                    toParentObject.put("to",toArray);
+                    toParentObject.put("to",toArray);
+                    toParentObject.put("dynamic_template_data",fromObject1);
 
                     personalizationsJarray.put(toParentObject);
 
@@ -295,9 +313,9 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
                     fromJarray.put(fromObject);
 
                     jsonBody.put("personalizations",personalizationsJarray);
-                    jsonBody.put("content",contentJarray);
+                    //jsonBody.put("content",contentJarray);
                     jsonBody.put("from",fromObject);
-                    
+                    jsonBody.put("template_id","XXXXXXXXXXXXXX");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -310,7 +328,22 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
                         Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
-                    }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Intent i = new Intent(getApplicationContext(),BookDetails.class);
+                        i.putExtra("theaterid",gettheaterid);
+                        i.putExtra("movieID",getmovieid);
+                        i.putExtra("numberOfSeats", noofseates.getText().toString());
+                        i.putExtra("totalPayment", "$" + totalprice);
+                        i.putExtra("uid", userID);
+                        i.putExtra("movieTime", timezone);
+                        i.putExtra("movieDate", setdates.getText().toString());
+                        //i.putExtra("paymentId", s);
+                        i.putExtra("orderid",documentReference.getId());
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();                    }
+                }
                 ){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
