@@ -27,15 +27,15 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EditTheaterActivity extends AppCompatActivity {
+public class EditMovieActivity extends AppCompatActivity {
 
-    String theaterId;
-    EditText updatetheatername,updatetheateraddress;
-    ImageView updatetheaterimage;
-    Button edittheater;
+    String movieId;
+    EditText updatemoviename,updatemoviecast,updatemoviedirector;
+    ImageView updatemovieimage;
+    Button editmovie;
 
     public Uri updimageurl;
-    public String theaterimageuri;
+    public String movieimageurl;
 
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
@@ -47,54 +47,59 @@ public class EditTheaterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_theater);
+        setContentView(R.layout.activity_edit_movie);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        theaterId = getIntent().getStringExtra("theaterID");
+        movieId = getIntent().getStringExtra("movieID");
 
-        updatetheaterimage = findViewById(R.id.updatetheaterimage);
-        updatetheatername = findViewById(R.id.updatetheatername);
-        updatetheateraddress = findViewById(R.id.updatetheateraddress);
-        edittheater = findViewById(R.id.update_theater_btn);
+        updatemovieimage = findViewById(R.id.updatemovieimage);
+        updatemoviename = findViewById(R.id.updatemoviename);
+        updatemoviecast = findViewById(R.id.updatemoviecast);
+        updatemoviedirector = findViewById(R.id.updatemoviedirector);
+        editmovie = findViewById(R.id.update_movie_btn);
 
-        dbroot.collection("theater").document(theaterId).addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+
+
+        dbroot.collection("movie").document(movieId).addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                updatetheatername.setText(documentSnapshot.getString("name"));
-                updatetheateraddress.setText(documentSnapshot.getString("address"));
-                Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatetheaterimage);
+                updatemoviecast.setText(documentSnapshot.getString("cast"));
+                updatemoviedirector.setText(documentSnapshot.getString("director"));
+                updatemoviename.setText(documentSnapshot.getString("moviename"));
+                Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatemovieimage);
             }
         });
 
-        updatetheaterimage.setOnClickListener(new View.OnClickListener() {
+        updatemovieimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditTheaterActivity.this, "Image clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditMovieActivity.this, "Image clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent,1);
             }
         });
 
-        edittheater.setOnClickListener(new View.OnClickListener() {
+        editmovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EditTheaterActivity.this, "Edit clicked", Toast.LENGTH_SHORT).show();
-                HashMap<String, Object> edittheaterdata = new HashMap<>();
-                edittheaterdata.put("name", updatetheatername.getText().toString());
-                edittheaterdata.put("address", updatetheateraddress.getText().toString());
-                //edittheaterdata.put("imageUrl", theaterimageuri);
-                edittheaterdata.put("theaterid",theaterId);
+                Toast.makeText(EditMovieActivity.this, "Edit clicked", Toast.LENGTH_SHORT).show();
+                HashMap<String, Object> editmoviedata = new HashMap<>();
+                editmoviedata.put("cast", updatemoviecast.getText().toString());
+                editmoviedata.put("director", updatemoviedirector.getText().toString());
+                editmoviedata.put("name", updatemoviename.getText().toString());
+                editmoviedata.put("imageUrl", movieimageurl);
+                editmoviedata.put("movieid",movieId);
 
-                dbroot.collection("theater").document(theaterId).set(edittheaterdata).addOnSuccessListener(new OnSuccessListener<Void>() {
+                dbroot.collection("movie").document(movieId).set(editmoviedata).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(EditTheaterActivity.this, "Theater Updated Successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(EditTheaterActivity.this, ViewTheatersActivity.class);
+                        Toast.makeText(EditMovieActivity.this, "Movie Updated Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EditMovieActivity.this, ViewMovieActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -107,17 +112,17 @@ public class EditTheaterActivity extends AppCompatActivity {
 
         //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
         updimageurl = data.getData();
-        updatetheaterimage.setImageURI(updimageurl);
+        updatemovieimage.setImageURI(updimageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("theater");
+        final StorageReference sr = storageReference.child("movie/"+randomkey);
         sr.putFile(updimageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(EditTheaterActivity.this, "uri: "+sr.getDownloadUrl(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditMovieActivity.this, "uri: "+sr.getDownloadUrl(), Toast.LENGTH_SHORT).show();
                 sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        theaterimageuri = uri.toString();
+                        movieimageurl = uri.toString();
                     }
                 });
             }

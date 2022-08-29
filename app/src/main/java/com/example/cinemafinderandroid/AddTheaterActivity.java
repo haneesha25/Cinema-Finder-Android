@@ -27,49 +27,44 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class AddMovieActivity extends AppCompatActivity {
+public class AddTheaterActivity extends AppCompatActivity {
 
-    EditText moviename,moviecast,moviedirector;
-    Button addmoviebtn;
-    ImageView selectmovieimage;
-    ArrayList<ViewMovieValues> movielist;
-
+    EditText theatername,theateraddress;
+    Button addtheaterbtn;
+    ImageView selectimage;
+    String userid;
+    private String theaterId;
     public Uri imageurl;
-    public String movieimageurl,userid;
-    private String movieId;
+    public String theaterimageurl;
+
+
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-
-    FirebaseFirestore dbroot;
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore dbroot;
     ActivityResultLauncher<Intent> mgcontet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_movie);
+        setContentView(R.layout.activity_add_theater);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
-        movieId = dbroot.collection("movie").getId();
-        moviename = findViewById(R.id.moviename);
-        moviecast = findViewById(R.id.moviecast);
-        moviedirector = findViewById(R.id.moviedirector);
-        addmoviebtn = findViewById(R.id.add_movie_btn);
-        selectmovieimage = findViewById(R.id.selectmovieimage);
-
+        theatername = findViewById(R.id.theatername);
+        theateraddress = findViewById(R.id.theateraddress);
+        addtheaterbtn = findViewById(R.id.add_theater_btn);
+        selectimage = findViewById(R.id.selectimage);
         FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
 
-
-        selectmovieimage.setOnClickListener(new View.OnClickListener() {
+        selectimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -78,51 +73,47 @@ public class AddMovieActivity extends AppCompatActivity {
             }
         });
 
-        addmoviebtn.setOnClickListener(new View.OnClickListener() {
+        addtheaterbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                addmovie();
+                addtheater();
             }
         });
     }
-    private void addmovie() {
+    private void addtheater() {
 
-        String ettheatername = moviename.getText().toString();
-        String etmoviecast = moviecast.getText().toString();
-        String etmoviedirector = moviedirector.getText().toString();
+        String ettheatername = theatername.getText().toString();
+        String ettheateraddress = theateraddress.getText().toString();
+        //  String ettheaterimageurl = theaterimageurl;
 
         if(TextUtils.isEmpty(ettheatername)){
-            moviename.setError("Movie name can not be empty");
-            moviename.requestFocus();
+            theatername.setError("Email can not be empty");
+            theatername.requestFocus();
         }
-        else if (TextUtils.isEmpty(etmoviecast)){
-            moviecast.setError("Movie cast can not be empty");
-            moviecast.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etmoviedirector)){
-            moviedirector.setError("Movie Director can not be empty");
-            moviedirector.requestFocus();
-        }else{
+        else if (TextUtils.isEmpty(ettheateraddress)){
+            theateraddress.setError("Password can not be empty");
+            theateraddress.requestFocus();
+        }else {
+
             Map<String, String> items = new HashMap<>();
-            items.put("name",ettheatername);
-            items.put("imageUrl", movieimageurl);
-            items.put("cast",etmoviecast );
-            items.put("director",etmoviedirector );
-            items.put("adminid",userid );
-            items.put("movieid","");
+            items.put("name", ettheatername);
+            items.put("address", ettheateraddress);
+            //items.put("imageUrl", theaterimageurl);
+            //items.put("adminid", userid);
+            items.put("theaterid","");
 
-
-            dbroot.collection("movie").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            dbroot.collection("theater").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {
-                    task.getResult().update("movieid", task.getResult().getId());
+                    task.getResult().update("theaterid" , task.getResult().getId());
                 }
             });
-            Toast.makeText(AddMovieActivity.this, "Add Movie SuccessFully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddMovieActivity.this, ViewMovieActivity.class);
+            // Toast.makeText(AddTheaterActivity.this, "Url" + theaterimageurl, Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddTheaterActivity.this, "Add theater SuccessFully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AddTheaterActivity.this, ViewTheatersActivity.class);
             startActivity(intent);
         }
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -130,9 +121,9 @@ public class AddMovieActivity extends AppCompatActivity {
 
         //  if(requestCode==1 && requestCode==RESULT_OK && data!=null && data.getData()!=null){
         imageurl = data.getData();
-        selectmovieimage.setImageURI(imageurl);
+        selectimage.setImageURI(imageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("movie/"+randomkey);
+        final StorageReference sr = storageReference.child("theater");
         sr.putFile(imageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -140,8 +131,8 @@ public class AddMovieActivity extends AppCompatActivity {
                 sr.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Toast.makeText(AddMovieActivity.this, "uri: "+uri, Toast.LENGTH_SHORT).show();
-                        movieimageurl = uri.toString();
+                        Toast.makeText(AddTheaterActivity.this, "uri: "+uri, Toast.LENGTH_SHORT).show();
+                        theaterimageurl = uri.toString();
                     }
                 });
             }
