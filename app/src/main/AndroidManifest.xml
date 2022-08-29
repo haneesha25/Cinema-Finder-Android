@@ -4,11 +4,11 @@
     package="com.example.cinemafinderandroid">
 
     <queries>
-        <package android:name="com.google.android.apps.nbu.paisa.user"/>
-        <package android:name="com.phonepe.app"/>
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+        <package android:name="com.phonepe.app" />
 
         <intent>
-            <action android:name="android.intent.action.SEND"/>
+            <action android:name="android.intent.action.SEND" />
         </intent>
     </queries>
 
@@ -22,46 +22,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CinemaFinderAndroid"
         tools:targetApi="31">
-        
-
+        <activity
+            android:name=".BookDetails"
+            android:exported="false" />
+        <activity
+            android:name=".BookingHistory"
+            android:exported="false"
+            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar"/>
         <activity
             android:name=".UpdateProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UserProfileActivity"/>
         <activity
             android:name=".EditTheaterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ViewTheatersActivity"/>
         <activity
             android:name=".EditMovieActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ViewMovieActivity"/>
         <activity
             android:name=".SelectSeats"
             android:exported="true"
-            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar"/>
+            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar" />
         <activity
             android:name=".ListMovies"
             android:exported="false"
-            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar"/>
+            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar" />
         <activity
             android:name=".ListTheater"
             android:exported="false"
-            android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar"/>
-        <activity
-            android:name=".UserHome"
-            android:exported="false"
-            android:label="@string/title_activity_user_home"
             android:theme="@style/Theme.CinemaFinderAndroid.NoActionBar" />
         <activity
             android:name=".ViewMovieActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AdminActivity"/>
         <activity
             android:name=".ViewTheatersActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AdminActivity"/>
         <activity
             android:name=".AddMovieActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AdminActivity"/>
         <activity
             android:name=".AddTheaterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AdminActivity"/>
         <activity
             android:name=".AdminHome"
             android:exported="false"
@@ -81,7 +88,7 @@
         </activity>
         <activity
             android:name=".AdminActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

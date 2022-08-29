@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -66,7 +67,8 @@ public class EditTheaterActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 updatetheatername.setText(documentSnapshot.getString("name"));
                 updatetheateraddress.setText(documentSnapshot.getString("address"));
-                Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatetheaterimage);
+                //Picasso.get().load(documentSnapshot.getString("imageUrl")).into(updatetheaterimage);
+                Glide.with(getApplicationContext()).load(documentSnapshot.getString("imageUrl")).into(updatetheaterimage);
             }
         });
 
@@ -88,7 +90,7 @@ public class EditTheaterActivity extends AppCompatActivity {
                 edittheaterdata.put("name", updatetheatername.getText().toString());
                 edittheaterdata.put("address", updatetheateraddress.getText().toString());
                 //edittheaterdata.put("imageUrl", theaterimageuri);
-                edittheaterdata.put("theaterid",theaterId);
+                edittheaterdata.put("theaterid", theaterId);
 
                 dbroot.collection("theater").document(theaterId).set(edittheaterdata).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -109,7 +111,7 @@ public class EditTheaterActivity extends AppCompatActivity {
         updimageurl = data.getData();
         updatetheaterimage.setImageURI(updimageurl);
         final String randomkey = UUID.randomUUID().toString();
-        final StorageReference sr = storageReference.child("theater");
+        final StorageReference sr = storageReference.child("theater/"+randomkey);
         sr.putFile(updimageurl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

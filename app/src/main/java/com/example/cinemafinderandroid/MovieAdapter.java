@@ -78,7 +78,38 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             }
         });
 
-        
+        holder.editmovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(),EditMovieActivity.class);
+                i.putExtra("movieID",movielist.get(position).getMovieId());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                view.getContext().startActivity(i);
+            }
+        });
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return movielist.size();
+    }
+
+    class MovieViewHolder extends RecyclerView.ViewHolder
+    {
+        TextView moviename,moviecast,moviedirector;
+        Button deletemovie,editmovie;
+        ImageView imageView;
+
+        public MovieViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            moviename = itemView.findViewById(R.id.recyclemoviename);
+            moviecast = itemView.findViewById(R.id.recyclemoviecast);
+            moviedirector = itemView.findViewById(R.id.recyclemoviedirector);
+            deletemovie = itemView.findViewById(R.id.deletemovie);
+            imageView = itemView.findViewById(R.id.movieimage);
+            editmovie = itemView.findViewById(R.id.editmovie);
 
 
         }

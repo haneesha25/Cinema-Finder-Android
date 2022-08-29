@@ -45,11 +45,11 @@ public class ListTheaterAdapter extends RecyclerView.Adapter<ListTheaterAdapter.
 
         holder.recyclemoviename.setText(viewTheaterValues.get(position).getName());
         holder.recyclemoviecast.setText(viewTheaterValues.get(position).getAddress());
-        String theaterimageurl = null;
-        theaterimageurl = viewTheaterValues.get(position).getImageUrl();
-        Picasso.get().load(theaterimageurl).into(holder.recyclemimage);
+       // String theaterimageurl = null;
+     //   theaterimageurl = viewTheaterValues.get(position).getImageUrl();
+      //  Picasso.get().load(theaterimageurl).into(holder.recyclemimage);
 
-        holder.recyclemimage.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context,SelectSeats.class);
@@ -59,6 +59,17 @@ public class ListTheaterAdapter extends RecyclerView.Adapter<ListTheaterAdapter.
                 context.startActivity(i);
             }
         });
+
+       /* holder.recyclemimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context,SelectSeats.class);
+                i.putExtra("theaterID",temp.getTheaterId());
+                i.putExtra("movieID",temp.getMovieId());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        });*/
 
     }
 
@@ -79,7 +90,7 @@ public class ListTheaterAdapter extends RecyclerView.Adapter<ListTheaterAdapter.
             super(itemView);
             recyclemoviename = (TextView) itemView.findViewById(R.id.listtheatername);
             recyclemoviecast = (TextView) itemView.findViewById(R.id.listtheateraddress);
-            recyclemimage = (ImageView) itemView.findViewById(R.id.listtheaterimage);
+            /*recyclemimage = (ImageView) itemView.findViewById(R.id.listtheaterimage);*/
 
         }
     }

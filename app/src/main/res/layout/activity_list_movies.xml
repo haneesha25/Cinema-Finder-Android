@@ -12,6 +12,17 @@
     <include
         layout="@layout/appbar"
         />
+    <!--<SearchView
+        android:layout_width="match_parent"
+        android:id="@+id/searchmovie"
+        android:layout_height="wrap_content"/>-->
+
+    <SearchView
+        android:id="@+id/searchmovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search movie"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

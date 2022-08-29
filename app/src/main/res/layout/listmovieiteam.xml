@@ -26,8 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_gravity="left"
         android:orientation="vertical"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         >
 
         <TextView
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="Movie Name"
+            android:layout_gravity="center"
             android:id="@+id/listmoviename"/>
 
         <TextView
@@ -42,6 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="Cast"
+            android:textAlignment="gravity"
+            android:layout_gravity="center"
             android:id="@+id/listmoviecast"/>
 
         <TextView
@@ -49,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="Director"
+            android:layout_gravity="center"
             android:id="@+id/listmoviedirector"
             />
 

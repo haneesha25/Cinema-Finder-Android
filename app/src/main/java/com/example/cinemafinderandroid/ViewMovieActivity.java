@@ -33,7 +33,7 @@ public class ViewMovieActivity extends AppCompatActivity {
         movielist = new ArrayList<>();
 
         db = FirebaseFirestore.getInstance();
-        movieAdapter = new MovieAdapter(movielist);
+        movieAdapter = new MovieAdapter(movielist,getApplicationContext());
         showallmovie.setAdapter(movieAdapter);
 
         db.collection("movie").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

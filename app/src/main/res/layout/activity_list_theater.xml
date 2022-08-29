@@ -9,10 +9,15 @@
     android:id="@+id/listtheaterlayout">
 
     <include
-        layout="@layout/appbar"
+        layout="@layout/appbar2"
         />
 
-
+    <SearchView
+        android:id="@+id/searchtheater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search theater"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
