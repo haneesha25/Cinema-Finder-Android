@@ -27,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,11 +36,11 @@ public class AddMovieActivity extends AppCompatActivity {
     EditText moviename,moviecast,moviedirector;
     Button addmoviebtn;
     ImageView selectmovieimage;
-    ArrayList<ViewMovieValues> movielist;
 
     public Uri imageurl;
     public String movieimageurl,userid;
-    private String movieId;
+    private String movieid;
+
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
@@ -58,7 +57,7 @@ public class AddMovieActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         dbroot = FirebaseFirestore.getInstance();
-        movieId = dbroot.collection("movie").getId();
+
         moviename = findViewById(R.id.moviename);
         moviecast = findViewById(R.id.moviecast);
         moviedirector = findViewById(R.id.moviedirector);
@@ -109,19 +108,17 @@ public class AddMovieActivity extends AppCompatActivity {
             items.put("imageUrl", movieimageurl);
             items.put("cast",etmoviecast );
             items.put("director",etmoviedirector );
-            items.put("adminid",userid );
-            items.put("movieid","");
+            //items.put("adminid",userid );
+            items.put("movieid",movieid);
 
 
             dbroot.collection("movie").add(items).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentReference> task) {
-                    task.getResult().update("movieid", task.getResult().getId());
+                    task.getResult().update("movieid",task.getResult().getId());
                 }
             });
             Toast.makeText(AddMovieActivity.this, "Add Movie SuccessFully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddMovieActivity.this, ViewMovieActivity.class);
-            startActivity(intent);
         }
     }
     @Override
