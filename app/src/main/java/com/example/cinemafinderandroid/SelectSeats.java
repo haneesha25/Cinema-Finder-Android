@@ -328,7 +328,21 @@ public class SelectSeats extends AppCompatActivity implements PaymentResultListe
                         Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
-                                       }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Intent i = new Intent(getApplicationContext(),BookDetails.class);
+                        i.putExtra("theaterid",gettheaterid);
+                        i.putExtra("movieID",getmovieid);
+                        i.putExtra("numberOfSeats", noofseates.getText().toString());
+                        i.putExtra("totalPayment", "$" + totalprice);
+                        i.putExtra("uid", userID);
+                        i.putExtra("movieTime", timezone);
+                        i.putExtra("movieDate", setdates.getText().toString());
+                        //i.putExtra("paymentId", s);
+                        i.putExtra("orderid",documentReference.getId());
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        Toast.makeText(SelectSeats.this, "Payment Success and Movie Tickets Reserved successfully", Toast.LENGTH_SHORT).show();                    }
                 }
                 ){
                     @Override
