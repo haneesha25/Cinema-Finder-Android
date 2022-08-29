@@ -81,37 +81,7 @@ public class TheaterAdapter extends RecyclerView.Adapter<TheaterAdapter.TheaterV
             }
         });
 
-        holder.edittheater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(),EditTheaterActivity.class);
-                i.putExtra("theaterID",viewTheaterValues.get(position).getTheaterId());
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                view.getContext().startActivity(i);
-            }
-        });
-
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return viewTheaterValues.size();
-    }
-
-    class TheaterViewHolder extends RecyclerView.ViewHolder{
-
-        TextView recyclemoviename,recyclemoviecast,recyclemoviedirector;
-        ImageView recyclemimage;
-        Button deletetheater,edittheater;
-
-        public TheaterViewHolder(@NonNull View itemView) {
-            super(itemView);
-            recyclemoviename = (TextView) itemView.findViewById(R.id.theatername);
-            recyclemoviecast = (TextView) itemView.findViewById(R.id.theateraddress);
-           // recyclemimage = (ImageView) itemView.findViewById(R.id.theaterimage);
-            deletetheater = (Button)   itemView.findViewById(R.id.deletetheater);
-            edittheater = (Button)   itemView.findViewById(R.id.edittheater);
+       
         }
     }
 }
